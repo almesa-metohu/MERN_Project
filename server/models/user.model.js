@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema ({
         required: [true, "Password is required"],
         minlength: [8, "Password must be 8 characters or longer"]
     },
+    location: {
+        type: String,
+        required: [true, "Location is required"]
+    },
     reservation: {
         roomId: {
             type: mongoose.Schema.Types.ObjectId,

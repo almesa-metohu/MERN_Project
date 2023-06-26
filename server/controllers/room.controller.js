@@ -1,5 +1,6 @@
 const Room = require('../models/room.model')
 const Hotel = require('../models/hotel.model')
+const User = require('../models/user.model')
 
 module.exports = {
     newRoom: (req, res) => {
@@ -22,6 +23,29 @@ module.exports = {
             })
             .catch(err => {
                 console.log('Failed to create a room' + err)
+                res.json(err)
+            })
+    },
+
+    bookRoom: (req, res) => {
+        Room.findOne({ _id: req.params.id })
+            .then(room => {
+                User.findOneAndUpdate(
+                    { _id: req.params.userId },
+                    { $push: { 'reservation.roomId': room._id } },
+                    { new: true, runValidators: true }
+                )
+                    .populate('reservation')
+                    .then(updatedUser => {
+                        res.status(200).json({ message: 'Room booked', user: updatedUser })
+                    })
+                    .catch(err => {
+                        console.log('Failed to update user with room id' + err)
+                        res.json(err)
+                    })
+            })
+            .catch(err => {
+                console.log('Failed to book a room' + err)
                 res.json(err)
             })
     },

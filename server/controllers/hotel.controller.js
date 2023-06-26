@@ -8,7 +8,7 @@ module.exports = {
     },
 
     getAllHotels: (req, res) => {
-        Hotel.find()
+        Hotel.find(req.query).limit(parseInt(req.query.limit))
         .populate('rooms')
         .populate('ratings')
         .then(hotel => res.json(hotel))
@@ -59,5 +59,20 @@ module.exports = {
         Hotel.deleteOne({_id: req.params.id})
             .then(deletedHotel => res.json(deletedHotel))
             .catch(err => res.json(err))
-    }
+    },
+
+    countByCity: (req, res) => {
+        const cities = req.query.cities.split(',')
+        Promise.all(
+            cities.map((city) => {
+                return Hotel.countDocuments({ location: city }).exec()
+            })
+        )
+            .then((list) => {
+                res.status(200).json(list)
+            })
+            .catch(err => res.json(err))
+    },
+
+    
 }
