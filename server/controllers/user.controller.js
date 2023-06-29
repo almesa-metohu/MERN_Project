@@ -1,5 +1,5 @@
 const User = require('../models/user.model')
-const Rating = require('../models/rating.model')
+/* const Rating = require('../models/rating.model')*/
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -49,5 +49,31 @@ module.exports = {
         console.log("logout")
         res.clearCookie('usertoken');
         res.sendStatus(200);
+    },
+
+    getUser: (req, res) => {
+        User.findById(req.params.id)
+            .then(user => res.json(user))
+            .catch(err => res.json(err))
+    },
+
+    getUsers: (req, res) => {
+        User.find()
+            .then(users => res.json(users))
+            .catch(err => res.json(err))
+    },
+
+    updateUser: (req, res) => {
+        User.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        )
+    },
+
+    deleteUser: (req, res) => {
+        User.findByIdAndDelete(req.params.id)
+            .then(deletedUser => res.json(deletedUser))
+            .catch(err => res.json(err))
     },
 }

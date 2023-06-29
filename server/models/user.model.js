@@ -23,18 +23,22 @@ const UserSchema = new mongoose.Schema ({
         required: [true, "Password is required"],
         minlength: [8, "Password must be 8 characters or longer"]
     },
-    location: {
+    city: {
         type: String,
-        required: [true, "Location is required"]
+        required: [true, "City is required"]
     },
-    reservation: {
-        roomId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Room'
-        },
-        startDate: Date,
-        endDate: Date
-    }
+    country: {
+        type: String,
+        required: [true, "Country is required"]
+    },
+    phone: {
+        type: String,
+        required: [true, "Phone number is required"],
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true})
 
 UserSchema.virtual('confirmPassword')
