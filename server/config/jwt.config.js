@@ -9,4 +9,24 @@ module.exports.authenticate = (req, res, next) => {
             next();
         }
     });
-}
+};
+
+module.exports.verifyUser = (req, res, next) => {
+    authenticate(req, res, next, () => {
+        if (req.user.id === req.params.id || req.user.isAdmin) {
+            next();
+        } else {
+            res.status(401).json({ verified: false });
+        }
+    })
+};
+
+module.exports.verifyAdmin = (req, res, next) => {
+    authenticate(req, res, next, () => {
+        if (req.user.isAdmin) {
+            next();
+        } else {
+            res.status(401).json({ verified: false });
+        }
+    });
+};
