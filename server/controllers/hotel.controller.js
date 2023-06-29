@@ -8,7 +8,11 @@ module.exports = {
     },
 
     getAllHotels: (req, res) => {
-        Hotel.find(req.query).limit(parseInt(req.query.limit))
+        const { min, max, ...others } = req.query;
+        Hotel.find({
+            ...others,
+            cheapestPrice: { $gt: min || 1, $lt: max || 999 }
+        }).limit(parseInt(req.query.limit))
         .populate('rooms')
         .populate('ratings')
         .then(hotel => res.json(hotel))
@@ -65,7 +69,7 @@ module.exports = {
         const cities = req.query.cities.split(',')
         Promise.all(
             cities.map((city) => {
-                return Hotel.countDocuments({ location: city }).exec()
+                return Hotel.countDocuments({ city: city }).exec()
             })
         )
             .then((list) => {

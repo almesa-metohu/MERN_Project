@@ -5,9 +5,17 @@ const HotelSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Property name is required']
     },
-    location: {
+    city: {
         type: String,
         required: [true, 'Location is required']
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    distance: {
+        type: String,
+        required: true,
     },
     description: {
         type: String,

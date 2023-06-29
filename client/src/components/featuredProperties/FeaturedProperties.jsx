@@ -1,5 +1,5 @@
 import "./featuredProperties.css";
-import useFetch from "../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 
 const FeaturedProperties = () => {
 
@@ -17,7 +17,7 @@ const FeaturedProperties = () => {
                     className="fpImg"
                 />
                 <span className="fpName">{item.name}</span>
-                <span className="fpCity">{item.location}</span>
+                <span className="fpCity">{item.city}</span>
                 <span className="fpPrice">Starting from ${item.cheapestPrice}</span>
                 {item.ratings ? <div className="fpRating">
                     <button>{item.ratings}</button>
