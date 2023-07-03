@@ -13,8 +13,8 @@ app.use(express.urlencoded({ extended: true }));
 require('./routes/hotel.routes')(app)
 require('./routes/room.routes')(app)
 require('./routes/user.routes')(app)
-require('./routes/rating.routes')(app)
-
+/* require('./routes/rating.routes')(app)
+ */
 const server = app.listen(8000, () => {
     console.log("Listening at Port 8000")
 })

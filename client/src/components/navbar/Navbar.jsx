@@ -1,14 +1,17 @@
 import "./navbar.css"
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 const Navbar = () => {
+
+    const navigate = useNavigate()
+
     return (
         <div className="navbar">
             <div className="navContainer">
-                <Link to='/' style={{color: 'inherit', textDecoration: 'none'}}><span className="logo">BooClo</span></Link>
+                <Link to='/' style={{color: 'inherit', textDecoration: 'none'}}><span className="logo h4">BooClo</span></Link>
                 <div className="navItems">
-                    <button className="navButton btn btn-light">Register</button>
-                    <button className="navButton btn btn-light">Login</button>
+                    <button className="navButton btn btn-light" onClick={() => {navigate('/register')}}>Register</button>
+                    <button className="navButton btn btn-light" onClick={() => {navigate('/login')}}>Login</button>
                 </div>
             </div>
         </div>

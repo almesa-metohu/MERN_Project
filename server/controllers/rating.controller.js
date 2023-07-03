@@ -1,4 +1,4 @@
-const Rating = require('../models/rating.model')
+/* const Rating = require('../models/rating.model')
 const Hotel = require('../models/hotel.model')
 
 module.exports = {
@@ -30,4 +30,4 @@ module.exports = {
         .then(rating => res.json(rating))
         .catch(err => res.json(err))
     }
-}
+} */

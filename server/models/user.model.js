@@ -18,11 +18,6 @@ const UserSchema = new mongoose.Schema ({
             message: "Please enter a valid email"
         }
     },
-    password: {
-        type: String,
-        required: [true, "Password is required"],
-        minlength: [8, "Password must be 8 characters or longer"]
-    },
     city: {
         type: String,
         required: [true, "City is required"]
@@ -32,8 +27,13 @@ const UserSchema = new mongoose.Schema ({
         required: [true, "Country is required"]
     },
     phone: {
-        type: String,
+        type: Number,
         required: [true, "Phone number is required"],
+    },
+    password: {
+        type: String,
+        required: [true, "Password is required"],
+        minlength: [8, "Password must be 8 characters or longer"]
     },
     isAdmin: {
         type: Boolean,
