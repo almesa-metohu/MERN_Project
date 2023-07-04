@@ -19,11 +19,12 @@ const Login = () => {
                 {withCredentials: true}
             )
             if (response.status === 200) {
+                console.log(response)
+                localStorage.setItem('userId',response.data.user._id)
                 navigate('/')
             }
         }
         catch (error) {
-            console.log(error.response)
             setValidation(error.response.data.errors);
         }
     }

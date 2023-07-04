@@ -7,13 +7,13 @@ module.exports = {
         Room.create(req.body)
             .then(room => {
                 Hotel.findOneAndUpdate(
-                    {_id: req.params.hotelId},
+                    { _id: req.params.hotelId },
                     { $push: { rooms: room._id } },
-                    {new: true, runValidators: true}
+                    { new: true, runValidators: true }
                 )
                     .populate('rooms')
                     .populate('hotel')
-                    .then((updatedHotel ) => {
+                    .then((updatedHotel) => {
                         res.status(200).json({ message: 'Room created', hotel: updatedHotel })
                     })
                     .catch(err => {
@@ -52,45 +52,45 @@ module.exports = {
 
     getAllRooms: (req, res) => {
         Room.find()
-        .then(room => res.json(room))
-        .catch(err => res.json(err))
+            .then(room => res.json(room))
+            .catch(err => res.json(err))
     },
 
     getOneRoom: (req, res) => {
-        Room.findOne({_id: req.params.id})
-        .then(room => {
-            if(!room) {
-                return res.status(400).json({error: "room not found"})
-            }
-            else{
-                res.json(room)
-            }
-        })
-        .catch(err => res.json(err))
+        Room.findOne({ _id: req.params.id })
+            .then(room => {
+                if (!room) {
+                    return res.status(400).json({ error: "room not found" })
+                }
+                else {
+                    res.json(room)
+                }
+            })
+            .catch(err => res.json(err))
     },
 
     editRoom: (req, res) => {
-        Room.findOne({_id: req.params.id})
+        Room.findOne({ _id: req.params.id })
             .then(room => {
-                if(!room) {
-                    return res.status(400).json({error: "room not found"})
+                if (!room) {
+                    return res.status(400).json({ error: "room not found" })
                 }
                 room.roomType = req.body.roomType,
-                room.price = req.body.price,
-                room.capacity = req.body.capacity
+                    room.price = req.body.price,
+                    room.capacity = req.body.capacity
                 room.roomNumbers = req.body.roomNumbers
                 return room.save()
             })
             .then(room => res.json(room))
-            .catch(err => res.status(500).json({error: err.errors}))
+            .catch(err => res.status(500).json({ error: err.errors }))
     },
-    
+
     deleteRoom: (req, res) => {
-        Room.deleteOne({_id: req.params.id})
+        Room.deleteOne({ _id: req.params.id })
             .then(deletedRoom => {
-                Hotel.findOneAndUpdate({_id: req.params.hotelId},
+                Hotel.findOneAndUpdate({ _id: req.params.hotelId },
                     { $pull: { rooms: req.params.id } },
-                    {new: true, runValidators: true}
+                    { new: true, runValidators: true }
                 )
                     .then(() => {
                         res.status(200).json({ message: 'Room deleted' })
@@ -104,5 +104,18 @@ module.exports = {
                 console.log('Failed to delete a room' + err)
                 res.json(err)
             })
+    },
+
+    roomAvailability: (req, res) => {
+        Room.updateOne(
+            { 'roomNumbers._id': req.params.id },
+            {
+                $push: {
+                    'roomNumbers.$.unavailableDates': req.body.dates
+                }
+            }
+        )
+            .then(room => res.status(200).json(room))
+            .catch(err => console.log(err))
     }
 }

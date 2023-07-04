@@ -3,21 +3,28 @@ import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import MailList from "../../components/mailList/MailList";
 import Footer from "../../components/footer/Footer";
+import Reserve from "../../components/reserve/Reserve";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot,
+import {
+    faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import axios from "axios";
 import useFetch from "../../hooks/useFetch";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../components/context/SearchContext";
 
 const Hotel = () => {
     const [slideNumber, setSlideNumber] = useState(0);
     const [open, setOpen] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [userData, setUserData] = useState('');
     const location = useLocation()
     const id = location.pathname.split("/")[2]
-    const {data, loading, error} = useFetch(`http://localhost:8000/api/hotel/${id}`)
-    const {dates, options} = useContext(SearchContext)
+    const { data, loading, error } = useFetch(`http://localhost:8000/api/hotel/${id}`)
+    const { dates, options } = useContext(SearchContext)
+    const userId = localStorage.getItem('userId')
+    const navigate = useNavigate()
 
     const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
     function dayDifference(date1, date2) {
@@ -27,7 +34,6 @@ const Hotel = () => {
     }
 
     const days = dayDifference(dates[0].endDate, dates[0].startDate);
-
 
     const handleOpen = (i) => {
         setSlideNumber(i);
@@ -46,12 +52,16 @@ const Hotel = () => {
         setSlideNumber(newSlideNumber)
     };
 
+    const bookHotel = () => {
+        userId ? setOpenModal(true) : navigate('/register')
+    }
+
 
     return (
         <div>
             <Navbar />
             <Header type="list" />
-            { loading? 'loading...' : <div className="hotelContainer">
+            {loading ? 'loading...' : <div className="hotelContainer">
                 {open && (
                     <div className="slider">
                         <FontAwesomeIcon
@@ -75,9 +85,9 @@ const Hotel = () => {
                     </div>
                 )}
                 <div className="hotelWrapper">
-                    <button className="bookNow">Reserve or Book Now!</button>
-{                    <h1 className="hotelTitle">{data.name}</h1>
-}                    <div className="hotelAddress">
+                    <button className="bookNow" onClick={bookHotel}>Reserve or Book Now!</button>
+                    {<h1 className="hotelTitle">{data.name}</h1>
+                    }                    <div className="hotelAddress">
                         <FontAwesomeIcon icon={faLocationDot} />
                         <span>{data.address}</span>
                     </div>
@@ -112,13 +122,15 @@ const Hotel = () => {
                             <h2>
                                 <b>${days * data.cheapestPrice * options.room}</b> ({days} nights)
                             </h2>
-                            <button>Reserve or Book Now!</button>
+                            <button onClick={bookHotel}>Reserve or Book Now!</button>
                         </div>
                     </div>
                 </div>
                 <MailList />
                 <Footer />
-            </div>}
+            </div>
+            }
+            {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
         </div>
     );
 };

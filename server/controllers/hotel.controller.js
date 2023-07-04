@@ -1,4 +1,5 @@
 const Hotel = require('../models/hotel.model')
+const Room = require('../models/room.model')
 
 module.exports = {
     newHotel: (req, res) => {
@@ -22,7 +23,6 @@ module.exports = {
     getOneHotel: (req, res) => {
         Hotel.findOne({_id: req.params.id})
         .populate('rooms')
-        .populate('ratings')
         .then(hotel => {
             if(!hotel) {
                 return res.status(400).json({error: "Property not found"})
@@ -78,5 +78,21 @@ module.exports = {
             .catch(err => res.json(err))
     },
 
-    
+    getHotelRooms: (req, res) => {
+        Hotel.findOne({ _id: req.params.id })
+            .then(hotel => {
+                const roommPromises = hotel.rooms.map((room) => {
+                    return Room.findById(room)
+                })
+                Promise.all(roommPromises)
+                    .then(rooms => {
+                        res.status(200).json(rooms)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({ error: 'An error occurred' });
+                    })
+                })
+                    .catch(err => console.log(err))
+    },
 }

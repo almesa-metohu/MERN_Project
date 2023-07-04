@@ -29,10 +29,9 @@ module.exports = {
             return res.status(400).json({ errors: { email: { message: 'There is no user with this email' } } })
         }
 
-        const correctPassword = await bcrypt.compare(req.body.password, user.password);
+        const correctPassword = bcrypt.compare(req.body.password, user.password);
 
         if (!correctPassword) {
-            // password wasn't a match!
             return res.status(400).json({ errors: { password: { message: "The password is incorrect" } } });
         }
 
@@ -42,7 +41,7 @@ module.exports = {
         res.cookie('usertoken', userToken, {
             httpOnly: true
         })
-        .json({ msg: 'success login!', token: userToken})
+        .json({ msg: 'success login!', user: user})
     },
 
     logout: (req, res) => {
