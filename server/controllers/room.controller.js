@@ -1,6 +1,7 @@
 const Room = require('../models/room.model')
 const Hotel = require('../models/hotel.model')
 const User = require('../models/user.model')
+require('dotenv').config();
 
 module.exports = {
     newRoom: (req, res) => {

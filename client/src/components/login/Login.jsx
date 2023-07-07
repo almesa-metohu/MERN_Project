@@ -31,7 +31,7 @@ const Login = () => {
 
     return (
         <div className='d-flex justify-content-between'>
-            <img src='https://i.ibb.co/sFB8KXf/Boo-Clo-3.png'/>
+            <img src='https://i.ibb.co/sFB8KXf/Boo-Clo-3.png' alt='login-image'/>
             <form onSubmit={login} className="login">
                 <div className="lContainer">
                 <h2 className='h2text'>Sign In!</h2>

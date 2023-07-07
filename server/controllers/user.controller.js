@@ -1,7 +1,7 @@
 const User = require('../models/user.model')
-/* const Rating = require('../models/rating.model')*/
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 module.exports = {
     register: (req, res) => {
@@ -14,7 +14,7 @@ module.exports = {
 
                 return res.cookie('usertoken', userToken, {
                     httpOnly: true
-                }).json({ msg: 'success!', user: user})
+                }).json({ msg: 'success!', user: user })
             })
             .catch(err => {
                 console.log('error register' + err)
@@ -22,10 +22,10 @@ module.exports = {
             })
     },
 
-    login: async(req, res) => {
+    login: async (req, res) => {
         const user = await User.findOne({ email: req.body.email })
-        
-        if(user === null) {
+
+        if (user === null) {
             return res.status(400).json({ errors: { email: { message: 'There is no user with this email' } } })
         }
 
@@ -41,7 +41,7 @@ module.exports = {
         res.cookie('usertoken', userToken, {
             httpOnly: true
         })
-        .json({ msg: 'success login!', user: user})
+            .json({ msg: 'success login!', user: user })
     },
 
     logout: (req, res) => {
@@ -75,4 +75,65 @@ module.exports = {
             .then(deletedUser => res.json(deletedUser))
             .catch(err => res.json(err))
     },
+
+    sendEmailReservation: (req, res) => {
+        const { formattedStart, formattedEnd, hotelName, hotelCity, usersName, usersEmail } = req.body;
+
+        const transporter = nodemailer.createTransport({
+            service: 'Outlook',
+            auth: {
+                user: process.env.BOOCLO_EMAIL,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.RESERVATION_EMAIL,
+            to: usersEmail,
+            subject: `BooClo Reservation Details`,
+            text: `Hello ${usersName}, these are the details of your reservation:
+            Place to stay: ${hotelName}, ${hotelCity}
+            Dates: ${formattedStart} - ${formattedEnd}
+            Check-in: 14:00 | Check-out: 11:00
+            
+            Thank you for choosing BooClo`
+        };
+        transporter.sendMail(mailOptions)
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch(error => {
+                console.error('Error sending email:', error);
+                res.sendStatus(500);
+            });
+    },
+
+    subscriptionEmail: (req, res) => {
+        const { submitedEmail } = req.body;
+        console.log(submitedEmail)
+        const transporter = nodemailer.createTransport({
+            service: 'Outlook',
+            auth: {
+                user: process.env.BOOCLO_EMAIL,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.BOOCLO_EMAIL,
+            to: submitedEmail,
+            subject: `Your Exclusive BooClo Newsletter: Discover Exciting Deals!`,
+            text: `Happy travels!`
+        };
+        transporter.sendMail(mailOptions)
+            .then(() => {
+                res.sendStatus(200);
+            })
+            .catch(error => {
+                console.error('Error sending email:', error);
+                res.sendStatus(500);
+            });
+    }
+
+
 }

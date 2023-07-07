@@ -37,7 +37,7 @@ const Register = () => {
 
     return (
         <div className='d-flex justify-content-between'> 
-            <img src='https://i.ibb.co/KzbnkC1/Boo-Clo-2.png'/>
+            <img src='https://i.ibb.co/KzbnkC1/Boo-Clo-2.png' alt='register-image'/>
             <form onSubmit={register} className="register">
                 <div className="lContainer">
                 <h2 className='h2text'>Sign Up!</h2>
