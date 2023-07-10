@@ -61,18 +61,6 @@ const Sidebar = () => {
                             &nbsp;&nbsp;&nbsp;Hotels&nbsp;&nbsp;&nbsp;
                         </button>
                     </li>
-                    <br />
-                    <h6 style={{ color: '#1D5C63', fontSize: '14px' }}>SERVICE</h6>
-                    <li className="nav-item">
-                        <button
-                            className={`nav-link link-dark ${activeButton === "requests" ? "active" : ""
-                                }`}
-                            onClick={() => {handleButtonClick("requests")
-                            navigate('admin/requests')}}
-                        >
-                            &nbsp;&nbsp;&nbsp;Requests&nbsp;&nbsp;&nbsp;
-                        </button>
-                    </li>
                 </ul>
                 <hr />
                 <button className="btn" onClick={signOut}>

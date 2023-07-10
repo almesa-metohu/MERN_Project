@@ -14,6 +14,7 @@ const Home = () => {
     const [user, setUser] = useState('')
     const userId = localStorage.getItem('userId')
 
+
     useEffect(() => {
         axios.get(`http://localhost:8000/api/user/${userId}`)
             .then(user => setUser(user.data))

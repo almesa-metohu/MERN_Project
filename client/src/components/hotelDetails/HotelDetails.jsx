@@ -4,7 +4,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import './hotelDetails.css'
 import axios from "axios";
 
-const HotelDetails = ({ hotel, closeModal }) => {
+const HotelDetails = ({ hotel, closeModal, socket }) => {
 
     const [name, setName] = useState(hotel.name)
     const [city, setCity] = useState(hotel.city)
@@ -25,7 +25,9 @@ const HotelDetails = ({ hotel, closeModal }) => {
             description,
             cheapestPrice
         }, { withCredentials: true })
-        .then(user => console.log(user))
+        .then(hotel => {
+            socket.emit('toServer', hotel.data)
+            console.log(hotel)})
         .catch(err => {setError(err.response.data.error)
         console.log(err)})
     }

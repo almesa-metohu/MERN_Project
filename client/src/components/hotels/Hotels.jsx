@@ -1,15 +1,25 @@
-import React, { useState } from "react";
-import useFetch from "../../hooks/useFetch";
+import React, { useState, useEffect } from "react";
 import './hotel.css'
 import axios from "axios";
 import HotelDetails from "../hotelDetails/HotelDetails";
 
-const Hotels = () => {
+const Hotels = ({ socket, update, setUpdate }) => {
 
     const [openModal, setOpenModal] = useState(false);
     const [selectedHotel, setSelectedHotel] = useState(null);
-    const { data, loading, error } = useFetch(`http://localhost:8000/api/allListings`)
+    const [data, setData] = useState('')
 
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/allListings`, { withCredentials: true })
+            .then(res => setData(res.data))
+            .catch(err => console.log(err))
+        socket.on('toClient', () => {
+            setUpdate(!update)
+        })
+        return () => socket.removeAllListeners()
+
+    }, [update])
+    
     const viewHotel = (hotel) => {
         setSelectedHotel(hotel)
         setOpenModal(true)
@@ -21,7 +31,9 @@ const Hotels = () => {
 
     const deleteHotel = (hotelId) => {
         axios.delete(`http://localhost:8000/api/deleteHotel/${hotelId}`, { withCredentials: true })
-            .then(() => console.log('hotel deleted'))
+            .then((res) => {
+                socket.emit('toServer', res.data)
+                console.log('hotel deleted')})
             .catch((err) => console.log('error deleting hotel' + err))
     }
 
@@ -46,9 +58,7 @@ const Hotels = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {loading ? <tr>
-                        <td colSpan={4}>Loading...</td>
-                    </tr> : <>{data.map((hotel, index) => (
+                    {data ? <>{data.map((hotel, index) => (
                         <tr key={index}>
                             <td><img src='' alt="" style={{ width: '50px', height: '50px' }} /> &nbsp;&nbsp;
                                 {hotel.name}</td>
@@ -60,13 +70,16 @@ const Hotels = () => {
                             </td>
                         </tr>
                     ))}
-                    </>}
+                    </> : <tr>
+                        <td colSpan={4}>Loading...</td>
+                    </tr>}
                 </tbody>
             </table>
             {openModal && (
                     <HotelDetails
                         hotel={selectedHotel}
                         closeModal={closeModal}
+                        socket={socket}
                     />
                 )}
         </div>

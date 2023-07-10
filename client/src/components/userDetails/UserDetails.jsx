@@ -4,7 +4,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import "./userDetails.css";
 import axios from "axios";
 
-const UserDetails = ({ user, closeModal }) => {
+const UserDetails = ({ user, closeModal, socket }) => {
 
     const [firstName, setFirstName] = useState(user.firstName)
     const [lastName, setLastName] = useState(user.lastName)
@@ -23,7 +23,9 @@ const UserDetails = ({ user, closeModal }) => {
             country,
             phone
         }, { withCredentials: true })
-        .then(user => console.log(user))
+        .then(user => {
+          socket.emit('toServer', user.data)
+          console.log(user)})
         .catch(err => {
           console.log(err)
           setError(err.response.data.error)

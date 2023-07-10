@@ -6,7 +6,7 @@ import UserDetails from "../userDetails/UserDetails";
 import { useNavigate } from "react-router-dom";
 import AddUser from "../addUser/AddUser";
 
-const Users = () => {
+const Users = ({ socket, update, setUpdate }) => {
 
     const [users, setUsers] = useState([])
     const [openModal, setOpenModal] = useState(false);
@@ -16,12 +16,14 @@ const Users = () => {
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/users`, { withCredentials: true })
-            .then(res => {
-                console.log(res)
-                setUsers(res.data)
-            })
+            .then(res => setUsers(res.data))
             .catch(err => console.log(err))
-    }, [])
+        socket.on('toClient', () => {
+            setUpdate(!update)
+        })
+        return () => socket.removeAllListeners()
+
+    }, [update])
 
     const viewUser = (user) => {
         setSelectedUser(user);
@@ -38,7 +40,9 @@ const Users = () => {
 
     const deleteUser = (userId) => {
         axios.delete(`http://localhost:8000/api/user/${userId}`, { withCredentials: true })
-            .then(() => console.log('user deleted'))
+            .then((res) => {
+                socket.emit('toServer', res.data)
+                console.log('user deleted')})
             .catch((err) => console.log('error deleting user' + err))
     }
 
@@ -77,8 +81,8 @@ const Users = () => {
                     ))}
                 </tbody>
             </table>
-            {openModal && ( <UserDetails user={selectedUser} closeModal={closeModal}/> )}
-            {openModalNew && ( <AddUser closeModalNew={closeModalNew}/> )}
+            {openModal && ( <UserDetails socket={socket} user={selectedUser} closeModal={closeModal}/> )}
+            {openModalNew && ( <AddUser socket={socket} closeModalNew={closeModalNew}/> )}
         </div>
     )
 }

@@ -4,7 +4,7 @@ import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import './adduser.css'
 
-const AddUser = ({ closeModalNew }) => {
+const AddUser = ({ closeModalNew, socket }) => {
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -30,7 +30,9 @@ const AddUser = ({ closeModalNew }) => {
                 confirmPassword
             }, { withCredentials: true }
         )
-            .then(() => console.log("Added"))
+            .then((res) => {
+                socket.emit('toServer', res.data)
+                console.log("Added")})
             .catch(error => {
                 console.log(error)
                 setError(error.response.data.error)
