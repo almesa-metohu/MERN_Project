@@ -18,6 +18,9 @@ const UserSchema = new mongoose.Schema ({
             message: "Please enter a valid email"
         }
     },
+    profilePhoto: {
+        type: String
+    },
     city: {
         type: String,
         required: [true, "City is required"]

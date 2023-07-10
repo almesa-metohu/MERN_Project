@@ -9,6 +9,6 @@ module.exports = app => {
     app.post('/api/subscriptionEmail', UserController.subscriptionEmail)
     app.get('/api/user/:id', UserController.getUser)
     app.get('/api/users', verifyAdmin, UserController.getUsers)
-    app.put('/api/user/:id', verifyUser, UserController.updateUser)
+    app.patch('/api/user/:id', verifyUser, UserController.updateUser)
     app.delete('/api/user/:id', verifyUser, UserController.deleteUser)
 }

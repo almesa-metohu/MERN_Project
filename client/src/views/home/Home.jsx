@@ -7,6 +7,7 @@ import MailList from "../../components/mailList/MailList";
 import Navbar from "../../components/navbar/Navbar";
 import "./home.css";
 import axios from "axios";
+import Admin from "../admin/Admin";
 
 const Home = () => {
 
@@ -17,18 +18,18 @@ const Home = () => {
         axios.get(`http://localhost:8000/api/user/${userId}`)
             .then(user => setUser(user.data))
             .catch(err => console.log(err))
-    },[])
+    }, [])
 
     return (
         <div>
-            <Navbar/>
-            {user.isAdmin ? <></> : <><Header/>
+            <Navbar />
+            {user.isAdmin ? <><Admin/></> : <><Header />
                 <div className="homeContainer">
-                    <Featured/>
+                    <Featured />
                     <h1 className="homeTitle">Homes guests love</h1>
-                    <FeaturedProperties/>
-                    <MailList/>
-                    <Footer/>
+                    <FeaturedProperties />
+                    <MailList />
+                    <Footer />
                 </div></>}
         </div>
     );

@@ -9,7 +9,6 @@ import {
     faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
-import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../components/context/SearchContext";
@@ -18,7 +17,6 @@ const Hotel = () => {
     const [slideNumber, setSlideNumber] = useState(0);
     const [open, setOpen] = useState(false);
     const [openModal, setOpenModal] = useState(false);
-    const [userData, setUserData] = useState('');
     const location = useLocation()
     const id = location.pathname.split("/")[2]
     const { data, loading, error } = useFetch(`http://localhost:8000/api/hotel/${id}`)

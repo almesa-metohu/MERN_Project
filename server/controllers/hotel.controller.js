@@ -41,18 +41,12 @@ module.exports = {
                     return res.status(400).json({error: "Property not found"})
                 }
                 hotel.name = req.body.name,
-                hotel.location = req.body.location,
-                hotel.img = req.body.img
-                hotel.nonSmokingRoom = req.body.nonSmokingRoom
-                hotel.fitnessCentre = req.body.fitnessCentre
-                hotel.restaurant = req.body.restaurant
-                hotel.freeWifi = req.body.freeWifi
-                hotel.familyRooms = req.body.familyRooms
-                hotel.bar = req.body.bar
-                hotel.breakfast = req.body.breakfast
-                hotel.freeParking = req.body.freeParking
-                hotel.pool = req.body.pool
-                hotel.roomService = req.body.roomService
+                hotel.city = req.body.city,
+                hotel.country = req.body.country,
+                hotel.address = req.body.address
+                hotel.distance = req.body.distance
+                hotel.description = req.body.description
+                hotel.cheapestPrice = req.body.cheapestPrice
                 return hotel.save()
             })
             .then(hotel => res.json(hotel))

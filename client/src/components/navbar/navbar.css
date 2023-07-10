@@ -6,10 +6,28 @@
     padding: 20px 0px;
 }
 
+.navbarAdmin {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+    border-bottom: 1px solid #1D5C63;
+
+}
+
 .navContainer {
     width: 100%;
     max-width: 1024px;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navContainerAdmin {
+    width: 100%;
+    max-width: 1024px;
+    color: #1D5C63;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,6 +54,11 @@
 .userName {
     padding: 10px 0 0 0;
     color: white;
+}
+
+.userNameAdmin {
+    padding: 10px 0 0 0;
+    color: #1D5C63;
 }
 
 .userButton {

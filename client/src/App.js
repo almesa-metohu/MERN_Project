@@ -9,6 +9,8 @@ import Hotel from "./views/hotel/Hotel";
 import List from "./views/list/List";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import Admin from "./views/admin/Admin";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
 
@@ -17,12 +19,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/*" element={<Home/>}/>
         <Route path="/hotels" element={<List/>}/>
         <Route path="/hotel/:id" element={<Hotel/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
-      </Routes>
+{/*         <Route path="/admin/*" element={<Admin/>}/>
+ */}      </Routes>
     </BrowserRouter>
   );
 }

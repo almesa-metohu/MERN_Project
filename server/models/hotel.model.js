@@ -7,15 +7,19 @@ const HotelSchema = new mongoose.Schema({
     },
     city: {
         type: String,
-        required: [true, 'Location is required']
+        required: [true, 'City is required']
+    },
+    country: {
+        type: String,
+        required: [true, 'Country is required']
     },
     address: {
         type: String,
-        required: true,
+        required: [true, 'Exact address is required'],
     },
     distance: {
         type: String,
-        required: true,
+        required: [true, 'Distance is required'],
     },
     description: {
         type: String,
@@ -35,51 +39,7 @@ const HotelSchema = new mongoose.Schema({
     },
     cheapestPrice: {
         type: Number,
-        required: true,
-    },
-    featured: {
-        type: Boolean,
-        default: false,
-    },
-    nonSmokingRoom: {
-        type: Boolean,
-        default: false
-    },
-    fitnessCentre: {
-        type: Boolean,
-        default: false
-    },
-    restaurant: {
-        type: Boolean,
-        default: false
-    },
-    freeWifi: {
-        type: Boolean,
-        default: false
-    },
-    familyRooms: {
-        type: Boolean,
-        default: false
-    },
-    bar: {
-        type: Boolean,
-        default: false
-    },
-    breakfast: {
-        type: Boolean,
-        default: false
-    },
-    freeParking: {
-        type: Boolean,
-        default: false
-    },
-    pool: {
-        type: Boolean,
-        default: false
-    },
-    roomService: {
-        type: Boolean,
-        default: false
+        required: [true, 'Price is required'],
     }
 }, {timestamps: true})
 
