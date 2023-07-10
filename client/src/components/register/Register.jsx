@@ -9,6 +9,7 @@ const Register = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [city, setCity] = useState('');
@@ -21,7 +22,7 @@ const Register = () => {
 
         try {
             const response = await axios.post('http://localhost:8000/api/register',
-                { firstName, lastName, email, city, country, phone, password, confirmPassword },
+                { firstName, lastName, email, profilePhoto, city, country, phone, password, confirmPassword },
                 { withCredentials: true }
             )
             if (response.status === 200) {
@@ -65,6 +66,13 @@ const Register = () => {
                         className="lInput"
                     />
                     {validation.email ? <span className='validation'>{validation.email.message}</span> : ""}
+                    <input
+                        type="text"
+                        placeholder="Img URL"
+                        value={profilePhoto}
+                        onChange={(e) => setProfilePhoto(e.target.value)}
+                        className="lInput"
+                    />
                     <input
                         type="text"
                         placeholder="City"

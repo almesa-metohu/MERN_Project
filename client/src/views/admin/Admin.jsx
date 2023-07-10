@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../../components/adminSidebar/Sidebar";
 import {
-    BrowserRouter,
     Routes,
     Route,
 } from "react-router-dom";
