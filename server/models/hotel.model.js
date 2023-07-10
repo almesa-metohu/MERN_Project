@@ -29,17 +29,16 @@ const HotelSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Room'
     }],
-    ratings: {
-        type: Number,
-        min: 0,
-        max: 5,
-    },
-    photos: {
-        type: [String],
+    photo: {
+        type: String,
     },
     cheapestPrice: {
         type: Number,
         required: [true, 'Price is required'],
+    },
+    featured: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps: true})
 

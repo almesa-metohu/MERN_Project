@@ -8,11 +8,14 @@ import Navbar from "../../components/navbar/Navbar";
 import "./home.css";
 import axios from "axios";
 import Admin from "../admin/Admin";
+import io from 'socket.io-client';
 
 const Home = () => {
 
     const [user, setUser] = useState('')
     const userId = localStorage.getItem('userId')
+    const [update, setUpdate] = useState(false)
+    const socket = io('http://localhost:8000', {transports: ['websocket']})
 
 
     useEffect(() => {
@@ -23,7 +26,7 @@ const Home = () => {
 
     return (
         <div>
-            <Navbar />
+            <Navbar socket={socket} update={update} setUpdate={setUpdate}/>
             {user.isAdmin ? <><Admin/></> : <><Header />
                 <div className="homeContainer">
                     <Featured />

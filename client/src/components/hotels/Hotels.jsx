@@ -2,16 +2,20 @@ import React, { useState, useEffect } from "react";
 import './hotel.css'
 import axios from "axios";
 import HotelDetails from "../hotelDetails/HotelDetails";
+import AddHotel from "../addHotel/AddHotel";
 
 const Hotels = ({ socket, update, setUpdate }) => {
 
     const [openModal, setOpenModal] = useState(false);
+    const [openModalNew, setOpenModalNew] = useState(false);
     const [selectedHotel, setSelectedHotel] = useState(null);
-    const [data, setData] = useState('')
+    const [data, setData] = useState([])
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/allListings`, { withCredentials: true })
-            .then(res => setData(res.data))
+            .then(res => {
+                console.log(res.data)
+                setData(res.data)})
             .catch(err => console.log(err))
         socket.on('toClient', () => {
             setUpdate(!update)
@@ -28,6 +32,10 @@ const Hotels = ({ socket, update, setUpdate }) => {
     const closeModal = () => {
         setOpenModal(false);
     };
+    
+    const closeModalNew = () => {
+        setOpenModalNew(false);
+    };
 
     const deleteHotel = (hotelId) => {
         axios.delete(`http://localhost:8000/api/deleteHotel/${hotelId}`, { withCredentials: true })
@@ -38,7 +46,7 @@ const Hotels = ({ socket, update, setUpdate }) => {
     }
 
     const addHotel = (hotelId) => {
-
+        setOpenModalNew(true)
     }
 
     return (
@@ -58,9 +66,9 @@ const Hotels = ({ socket, update, setUpdate }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data ? <>{data.map((hotel, index) => (
+                    {data.map((hotel, index) => (
                         <tr key={index}>
-                            <td><img src='' alt="" style={{ width: '50px', height: '50px' }} /> &nbsp;&nbsp;
+                            <td><img src={hotel.photo} alt="" style={{ width: '50px', height: '50px' }} /> &nbsp;&nbsp;
                                 {hotel.name}</td>
                             <td>{hotel.address}, {hotel.city}</td>
                             <td>{hotel.country}</td>
@@ -70,18 +78,10 @@ const Hotels = ({ socket, update, setUpdate }) => {
                             </td>
                         </tr>
                     ))}
-                    </> : <tr>
-                        <td colSpan={4}>Loading...</td>
-                    </tr>}
                 </tbody>
             </table>
-            {openModal && (
-                    <HotelDetails
-                        hotel={selectedHotel}
-                        closeModal={closeModal}
-                        socket={socket}
-                    />
-                )}
+            {openModal && ( <HotelDetails hotel={selectedHotel} closeModal={closeModal} socket={socket} /> )}
+            {openModalNew && ( <AddHotel socket={socket} closeModalNew={closeModalNew}/> )}
         </div>
     )
 }

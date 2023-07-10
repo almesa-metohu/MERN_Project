@@ -9,6 +9,7 @@ const AddUser = ({ closeModalNew, socket }) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [profilePhoto, setProfilePhoto] = useState('')
     const [city, setCity] = useState('')
     const [country, setCountry] = useState('')
     const [phone, setPhone] = useState('')
@@ -23,6 +24,7 @@ const AddUser = ({ closeModalNew, socket }) => {
                 firstName,
                 lastName,
                 email,
+                profilePhoto,
                 city,
                 country,
                 phone,
@@ -96,6 +98,19 @@ return (
                                 onChange={(e) => setPhone(e.target.value)}
                             />
                             {error.phone ? <p style={{ color: 'red', fontSize: '10px' }}>{error.phone.message}</p> : ''}
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div>
+                    <div className="form-group">
+                        <div className="label-input-container">
+                            <label htmlFor="firstName">Profile Photo URL:</label>
+                            <input
+                                type="text"
+                                id="name"
+                                onChange={(e) => setProfilePhoto(e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>

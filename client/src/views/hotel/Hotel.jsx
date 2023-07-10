@@ -38,18 +38,6 @@ const Hotel = () => {
         setOpen(true);
     };
 
-    const handleMove = (direction) => {
-        let newSlideNumber;
-
-        if (direction === "l") {
-            newSlideNumber = slideNumber === 0 ? 5 : slideNumber - 1;
-        } else {
-            newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
-        }
-
-        setSlideNumber(newSlideNumber)
-    };
-
     const bookHotel = () => {
         userId ? setOpenModal(true) : navigate('/register')
     }
@@ -67,27 +55,14 @@ const Hotel = () => {
                             className="close"
                             onClick={() => setOpen(false)}
                         />
-                        <FontAwesomeIcon
-                            icon={faCircleArrowLeft}
-                            className="arrow"
-                            onClick={() => handleMove("l")}
-                        />
-                        <div className="sliderWrapper">
-                            <img src={data.photos[slideNumber]} alt="" className="sliderImg" />
-                        </div>
-                        <FontAwesomeIcon
-                            icon={faCircleArrowRight}
-                            className="arrow"
-                            onClick={() => handleMove("r")}
-                        />
                     </div>
                 )}
                 <div className="hotelWrapper">
                     <button className="bookNow" onClick={bookHotel}>Reserve or Book Now!</button>
-                    {<h1 className="hotelTitle">{data.name}</h1>
-                    }                    <div className="hotelAddress">
+                    <h1 className="hotelTitle">{data.name}</h1>
+                    <div className="hotelAddress">
                         <FontAwesomeIcon icon={faLocationDot} />
-                        <span>{data.address}</span>
+                        <span>{data.address}, {data.city}</span>
                     </div>
                     <span className="hotelDistance">
                         Excellent location – {data.distance}m from center
@@ -95,21 +70,12 @@ const Hotel = () => {
                     <span className="hotelPriceHighlight">
                         Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
                     </span>
-                    <div className="hotelImages">
-                        {data.photos ? data.photos.map((photo, index) => (
-                            <div className="hotelImgWrapper" key={index}>
-                                <img
-                                    onClick={() => handleOpen(index)}
-                                    src={photo}
-                                    alt=""
-                                    className="hotelImg"
-                                />
-                            </div>
-                        )) : ""}
-                    </div>
                     <div className="hotelDetails">
                         <div className="hotelDetailsTexts">
                             <p className="hotelDesc">{data.description}</p>
+                    <div className="hotelImages">
+                        <img src={data.photo}/>
+                    </div>
                         </div>
                         <div className="hotelDetailsPrice">
                             <h1>Perfect for a {days}-night stay!</h1>

@@ -15,7 +15,6 @@ module.exports = {
             cheapestPrice: { $gt: min || 1, $lt: max || 999 }
         }).limit(parseInt(req.query.limit))
         .populate('rooms')
-        .populate('ratings')
         .then(hotel => res.json(hotel))
         .catch(err => res.json(err))
     },
