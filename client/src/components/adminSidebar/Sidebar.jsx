@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({ update, setUpdate }) => {
 
     const navigate = useNavigate()
     const [activeButton, setActiveButton] = useState(null);
@@ -18,6 +18,7 @@ const Sidebar = () => {
             .then(() => {
                 console.log('logging out')
                 localStorage.removeItem('userId');
+                setUpdate(!update)
                 navigate('/')
             })
             .catch(err => console.log(err.data))
@@ -45,7 +46,7 @@ const Sidebar = () => {
                             className={`nav-link link-dark ${activeButton === "users" ? "active" : ""
                                 }`}
                             onClick={() => {handleButtonClick("users")
-                            navigate('admin/users')
+                            navigate('')
                         }}
                         >
                             &nbsp;&nbsp;&nbsp;Users&nbsp;&nbsp;&nbsp;
@@ -59,6 +60,16 @@ const Sidebar = () => {
                             navigate('admin/hotels')}}
                         >
                             &nbsp;&nbsp;&nbsp;Hotels&nbsp;&nbsp;&nbsp;
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link link-dark ${activeButton === "rooms" ? "active" : ""
+                                }`}
+                            onClick={() => {handleButtonClick("rooms")
+                            navigate('admin/rooms')}}
+                        >
+                            &nbsp;&nbsp;&nbsp;Rooms&nbsp;&nbsp;&nbsp;
                         </button>
                     </li>
                 </ul>

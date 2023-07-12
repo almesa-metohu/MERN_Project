@@ -22,12 +22,12 @@ const Home = () => {
         axios.get(`http://localhost:8000/api/user/${userId}`)
             .then(user => setUser(user.data))
             .catch(err => console.log(err))
-    }, [])
+    }, [update])
 
     return (
         <div>
             <Navbar socket={socket} update={update} setUpdate={setUpdate}/>
-            {user.isAdmin ? <><Admin/></> : <><Header />
+            {user.isAdmin ? <><Admin update={update} setUpdate={setUpdate}/></> : <><Header />
                 <div className="homeContainer">
                     <Featured />
                     <h1 className="homeTitle">Homes guests love</h1>

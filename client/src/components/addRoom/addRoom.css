@@ -1,29 +1,10 @@
-.add-hotel {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.418);
-    position: fixed;
-    top: 0;
-    left: 0;
+.add-room {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-right: 80px;
 }
 
-.rContainer {
-    border: none;
-    border-radius: 10px;
-    background-color: white;
-    padding: 20px;
-    position: relative;
-}
-
-.rClose {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-}
 
 .rButton {
     border: none;
@@ -53,9 +34,9 @@
     font-weight: 500;
 }
 
-#name,
-#photo,
-#distanceCity,
-#price {
-    width: 400px;
+#room-type,
+#price,
+#capacity,
+#room-numbers {
+    width: 420px;
 }

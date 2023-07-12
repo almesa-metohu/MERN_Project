@@ -97,7 +97,7 @@ module.exports = {
         const { formattedStart, formattedEnd, hotelName, hotelCity, usersName, usersEmail } = req.body;
 
         const transporter = nodemailer.createTransport({
-            service: 'Outlook',
+            service: 'Yahoo',
             auth: {
                 user: process.env.BOOCLO_EMAIL,
                 pass: process.env.EMAIL_PASSWORD
@@ -129,7 +129,7 @@ module.exports = {
         const { submitedEmail } = req.body;
         console.log(submitedEmail)
         const transporter = nodemailer.createTransport({
-            service: 'Outlook',
+            service: 'Yahoo',
             auth: {
                 user: process.env.BOOCLO_EMAIL,
                 pass: process.env.EMAIL_PASSWORD

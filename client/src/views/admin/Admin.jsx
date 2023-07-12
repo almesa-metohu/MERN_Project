@@ -9,23 +9,24 @@ import Dashboard from "../../components/dashboard/Dashboard";
 import Users from "../../components/users/Users";
 import Hotels from "../../components/hotels/Hotels";
 import io from 'socket.io-client';
+import AddRoom from "../../components/addRoom/AddRoom";
 
-const Admin = () => {
+const Admin = ({ update, setUpdate }) => {
 
-    const [update, setUpdate] = useState(false)
     const socket = io('http://localhost:8000', {transports: ['websocket']})
 
     return (
         <div>
             <div className="d-flex wraping-container">
                 <div className="sidebar-container">
-                    <Sidebar />
+                    <Sidebar update={update} setUpdate={setUpdate}/>
                 </div>
                 <div className="components-container">
                     <Routes>
                         <Route path="admin/dashboard" element={<Dashboard/>}/>
-                        <Route path="admin/users" element={<Users socket={socket} update={update} setUpdate={setUpdate}/>} />
+                        <Route path="" element={<Users socket={socket} update={update} setUpdate={setUpdate}/>} />
                         <Route path="admin/hotels" element={<Hotels socket={socket} update={update} setUpdate={setUpdate}/>} />
+                        <Route path="admin/rooms" element={<AddRoom socket={socket} update={update} setUpdate={setUpdate}/>} />
                     </Routes>
                 </div>
             </div>

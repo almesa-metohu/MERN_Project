@@ -5,15 +5,15 @@ require('dotenv').config();
 
 module.exports = {
     newRoom: (req, res) => {
+        const hotelId = req.params.hotelId
         Room.create(req.body)
             .then(room => {
                 Hotel.findOneAndUpdate(
-                    { _id: req.params.hotelId },
+                    { _id: hotelId },
                     { $push: { rooms: room._id } },
                     { new: true, runValidators: true }
                 )
                     .populate('rooms')
-                    .populate('hotel')
                     .then((updatedHotel) => {
                         res.status(200).json({ message: 'Room created', hotel: updatedHotel })
                     })

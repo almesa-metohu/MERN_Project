@@ -17,8 +17,7 @@ const Navbar = ({ update, setUpdate, socket }) => {
         axios.get(`http://localhost:8000/api/user/${userId}`)
             .then(user => setData(user.data))
             .catch(err => console.log(err))
-        socket.on('toClient', () => {
-            setUpdate(!update)})
+
     }, [update])
 
     const logout = () => {

@@ -37,7 +37,7 @@ const AddUser = ({ closeModalNew, socket }) => {
                 console.log("Added")})
             .catch(error => {
                 console.log(error)
-                setError(error.response.data.error)
+                setError(error.response.data.errors)
             })
     }
 
@@ -74,7 +74,6 @@ return (
                         </div>
                     </div>
                 </div>
-                <br />
                 <div className="d-flex justify-content-center">
                     <div className="form-group">
                         <div className="label-input-container">
@@ -101,7 +100,6 @@ return (
                         </div>
                     </div>
                 </div>
-                <br/>
                 <div>
                     <div className="form-group">
                         <div className="label-input-container">
@@ -114,7 +112,6 @@ return (
                         </div>
                     </div>
                 </div>
-                <br />
                 <div className="d-flex justify-content-center">
                     <div className="form-group">
                         <div className="label-input-container">
@@ -139,7 +136,6 @@ return (
                         </div>
                     </div>
                 </div>
-                <br />
                 <div className="d-flex justify-content-center">
                     <div className="form-group">
                         <div className="label-input-container">

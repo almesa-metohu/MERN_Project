@@ -28,7 +28,7 @@ const UserDetails = ({ user, closeModal, socket }) => {
           console.log(user)})
         .catch(err => {
           console.log(err)
-          setError(err.response.data.error)
+          setError(err.response.data.errors)
         })
     }
 
