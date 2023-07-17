@@ -6,7 +6,7 @@ Please note that this project is currently incomplete and is actively maintained
 ![SignUp Page](signUp.PNG)
 ![Home Page](homePage1.PNG)
 ![List Page](list.PNG)
-![Hotel Page](otelPage.PNG)
+![Hotel Page](hotelPage.PNG)
 ![Admin View](adminView.PNG)
 
 
